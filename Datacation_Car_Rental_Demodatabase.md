@@ -1,0 +1,794 @@
+# Datacation Car Rental — Demodatabase
+
+Volledig fictieve gegevens voor de demonstratie: 10 klanten, 10 voertuigen en 15 boekingen.
+
+De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppelen de records. `null` betekent niet geregistreerd of niet van toepassing; `0` betekent daadwerkelijk nul. Statussen horen bij de peildatum van deze dataset en worden niet automatisch bijgewerkt.
+
+## Metadata
+
+| Veld | Waarde |
+| --- | --- |
+| versie | 1.0 |
+| bedrijf | Datacation Car Rental |
+| fictief | true |
+| peildatum | 2026-09-16T12:00:00+02:00 |
+| tijdzone | Europe/Amsterdam |
+| valuta | EUR |
+| taal | nl-NL |
+| bedragen | Huurprijzen zijn fictieve consumentenprijzen inclusief een aangenomen demo-btw van 21%. Borg is afzonderlijke zekerheid, geen huursom. |
+| tariefbasis | Per begonnen 24 uur; alle voorbeelden omvatten hele dagen. Geen marktprijzen of volledige verhuurvoorwaarden. |
+| scope | 10 klanten, 10 fysieke auto’s, 15 boekingen. Vestigingen in Amsterdam, Utrecht en Rotterdam zijn fictieve verhuurpunten. |
+| kentekens | DEMO-001 t/m DEMO-010 zijn opzettelijk geen geldige kentekens. |
+| contact | E-mailadressen zijn testadressen op example.com; geen telefoonnummers, BSN, documentnummers of betaalkaartgegevens. |
+| null_betekenis | null = niet van toepassing of niet geregistreerd; een bedrag 0 betekent daadwerkelijk nul. |
+| relationships | bookings.customer_id → customers.customer_id; bookings.vehicle_id → vehicles.vehicle_id |
+| bron | Volledig synthetisch opgesteld voor deze demonstratie; geen echte klant- of verhuuradministratie. |
+| identifier_contract | Canonical booking identifier: bookings[].booking_id, formatted as DCR-1234. No booking_number or boeking_id fields are used. |
+
+## Klanten
+
+### K001
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K001 |
+| name | Sanne de Vries |
+| email | klant01@example.com |
+| city | Utrecht |
+| country | Nederland |
+| date_of_birth | 1991-04-12 |
+| customer_type | Particulier |
+| drivers_license_since | 2010-06-18 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K002
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K002 |
+| name | Daan van Dijk |
+| email | klant02@example.com |
+| city | Amsterdam |
+| country | Nederland |
+| date_of_birth | 1985-11-03 |
+| customer_type | Zakelijk |
+| drivers_license_since | 2004-02-20 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K003
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K003 |
+| name | Fatima El Amrani |
+| email | klant03@example.com |
+| city | Rotterdam |
+| country | Nederland |
+| date_of_birth | 1994-07-22 |
+| customer_type | Particulier |
+| drivers_license_since | 2013-09-10 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K004
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K004 |
+| name | Jeroen Bakker |
+| email | klant04@example.com |
+| city | Amersfoort |
+| country | Nederland |
+| date_of_birth | 1978-02-16 |
+| customer_type | Particulier |
+| drivers_license_since | 1996-08-14 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K005
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K005 |
+| name | Lotte Visser |
+| email | klant05@example.com |
+| city | Haarlem |
+| country | Nederland |
+| date_of_birth | 1998-09-05 |
+| customer_type | Particulier |
+| drivers_license_since | 2017-11-23 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K006
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K006 |
+| name | Yusuf Demir |
+| email | klant06@example.com |
+| city | Nieuwegein |
+| country | Nederland |
+| date_of_birth | 1988-06-28 |
+| customer_type | Zakelijk |
+| drivers_license_since | 2007-05-09 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K007
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K007 |
+| name | Emma van den Berg |
+| email | klant07@example.com |
+| city | Delft |
+| country | Nederland |
+| date_of_birth | 2003-12-14 |
+| customer_type | Particulier |
+| drivers_license_since | 2023-03-08 |
+| drivers_license_category | B |
+| identity_verification | Nog te controleren |
+| preferred_language | nl-NL |
+
+### K008
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K008 |
+| name | Thomas Smit |
+| email | klant08@example.com |
+| city | Almere |
+| country | Nederland |
+| date_of_birth | 1982-01-30 |
+| customer_type | Zakelijk |
+| drivers_license_since | 2000-04-21 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K009
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K009 |
+| name | Noor Jansen |
+| email | klant09@example.com |
+| city | Gouda |
+| country | Nederland |
+| date_of_birth | 1996-05-19 |
+| customer_type | Particulier |
+| drivers_license_since | 2015-07-02 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K010
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K010 |
+| name | Bram de Groot |
+| email | klant10@example.com |
+| city | Hilversum |
+| country | Nederland |
+| date_of_birth | 1990-08-11 |
+| customer_type | Particulier |
+| drivers_license_since | 2009-10-16 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+## Voertuigen
+
+### A001
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A001 |
+| demo_license_plate | DEMO-001 |
+| make | Toyota |
+| model | Aygo X |
+| vehicle_class | Mini |
+| fuel_type | Benzine |
+| transmission | Handgeschakeld |
+| seats | 4 |
+| model_year | 2024 |
+| location | Utrecht |
+| status | Verhuurd |
+| odometer_km | 28140 |
+| daily_rate_eur | 49 |
+| deposit_eur | 500 |
+| excess_eur | 750 |
+| maintenance_until | null |
+
+### A002
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A002 |
+| demo_license_plate | DEMO-002 |
+| make | Volkswagen |
+| model | Polo |
+| vehicle_class | Economy |
+| fuel_type | Benzine |
+| transmission | Handgeschakeld |
+| seats | 5 |
+| model_year | 2023 |
+| location | Amsterdam |
+| status | Verhuurd |
+| odometer_km | 45210 |
+| daily_rate_eur | 59 |
+| deposit_eur | 500 |
+| excess_eur | 750 |
+| maintenance_until | null |
+
+### A003
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A003 |
+| demo_license_plate | DEMO-003 |
+| make | Renault |
+| model | Clio |
+| vehicle_class | Economy |
+| fuel_type | Benzine |
+| transmission | Handgeschakeld |
+| seats | 5 |
+| model_year | 2024 |
+| location | Rotterdam |
+| status | Beschikbaar |
+| odometer_km | 22320 |
+| daily_rate_eur | 55 |
+| deposit_eur | 500 |
+| excess_eur | 750 |
+| maintenance_until | null |
+
+### A004
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A004 |
+| demo_license_plate | DEMO-004 |
+| make | Toyota |
+| model | Corolla Touring Sports |
+| vehicle_class | Stationwagen |
+| fuel_type | Hybride |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2024 |
+| location | Utrecht |
+| status | Beschikbaar |
+| odometer_km | 31780 |
+| daily_rate_eur | 85 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | null |
+
+### A005
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A005 |
+| demo_license_plate | DEMO-005 |
+| make | Kia |
+| model | Niro EV |
+| vehicle_class | Elektrische crossover |
+| fuel_type | Elektrisch |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2024 |
+| location | Amsterdam |
+| status | Beschikbaar |
+| odometer_km | 19860 |
+| daily_rate_eur | 89 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | null |
+
+### A006
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A006 |
+| demo_license_plate | DEMO-006 |
+| make | Volkswagen |
+| model | Golf |
+| vehicle_class | Compact |
+| fuel_type | Benzine |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2023 |
+| location | Utrecht |
+| status | Verhuurd |
+| odometer_km | 38650 |
+| daily_rate_eur | 75 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | null |
+
+### A007
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A007 |
+| demo_license_plate | DEMO-007 |
+| make | Opel |
+| model | Corsa |
+| vehicle_class | Economy |
+| fuel_type | Benzine |
+| transmission | Handgeschakeld |
+| seats | 5 |
+| model_year | 2024 |
+| location | Rotterdam |
+| status | Beschikbaar |
+| odometer_km | 24750 |
+| daily_rate_eur | 55 |
+| deposit_eur | 500 |
+| excess_eur | 750 |
+| maintenance_until | null |
+
+### A008
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A008 |
+| demo_license_plate | DEMO-008 |
+| make | Tesla |
+| model | Model 3 |
+| vehicle_class | Elektrische sedan |
+| fuel_type | Elektrisch |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2024 |
+| location | Amsterdam |
+| status | Beschikbaar |
+| odometer_km | 30120 |
+| daily_rate_eur | 109 |
+| deposit_eur | 1000 |
+| excess_eur | 1500 |
+| maintenance_until | null |
+
+### A009
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A009 |
+| demo_license_plate | DEMO-009 |
+| make | Peugeot |
+| model | 3008 |
+| vehicle_class | SUV |
+| fuel_type | Benzine |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2023 |
+| location | Rotterdam |
+| status | Beschikbaar |
+| odometer_km | 41730 |
+| daily_rate_eur | 95 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | null |
+
+### A010
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A010 |
+| demo_license_plate | DEMO-010 |
+| make | Skoda |
+| model | Octavia Combi |
+| vehicle_class | Stationwagen |
+| fuel_type | Benzine |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2024 |
+| location | Utrecht |
+| status | Onderhoud |
+| odometer_km | 35620 |
+| daily_rate_eur | 89 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | 2026-09-18T18:00:00+02:00 |
+
+## Boekingen
+
+### DCR-1042
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1042 |
+| customer_id | K001 |
+| vehicle_id | A001 |
+| pickup_at | 2026-09-14T10:00:00+02:00 |
+| return_at | 2026-09-18T10:00:00+02:00 |
+| location | Utrecht |
+| status | Lopend |
+| rental_days | 4 |
+| daily_rate_eur | 49 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 196 |
+| paid_eur | 196 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Gereserveerd |
+| deposit_held_eur | 500 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Klant wil mogelijk verlengen; nog niet verwerkt. |
+
+### DCR-1043
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1043 |
+| customer_id | K002 |
+| vehicle_id | A002 |
+| pickup_at | 2026-09-15T10:00:00+02:00 |
+| return_at | 2026-09-17T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Lopend |
+| rental_days | 2 |
+| daily_rate_eur | 59 |
+| extras_per_day_eur | 10 |
+| rental_amount_eur | 138 |
+| paid_eur | 138 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Gereserveerd |
+| deposit_held_eur | 500 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Extra bestuurder vastgelegd; beide rijbewijzen gecontroleerd. |
+
+### DCR-1044
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1044 |
+| customer_id | K003 |
+| vehicle_id | A003 |
+| pickup_at | 2026-09-10T10:00:00+02:00 |
+| return_at | 2026-09-13T10:00:00+02:00 |
+| location | Rotterdam |
+| status | Afgerond |
+| rental_days | 3 |
+| daily_rate_eur | 55 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 165 |
+| paid_eur | 165 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Deels ingehouden |
+| deposit_held_eur | 350 |
+| disputed_damage_eur | 350 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Klant betwist kras achterbumper; uitgifterapport ontbreekt. Schadepost nog niet gefactureerd. |
+
+### DCR-1045
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1045 |
+| customer_id | K004 |
+| vehicle_id | A004 |
+| pickup_at | 2026-09-18T10:00:00+02:00 |
+| return_at | 2026-09-21T10:00:00+02:00 |
+| location | Utrecht |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 85 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 255 |
+| paid_eur | 255 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Ophalen vrijdag om 10:00; gezinsweekend. |
+
+### DCR-1046
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1046 |
+| customer_id | K005 |
+| vehicle_id | A005 |
+| pickup_at | 2026-09-19T10:00:00+02:00 |
+| return_at | 2026-09-22T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 89 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 267 |
+| paid_eur | 0 |
+| refunded_eur | 0 |
+| payment_status | Openstaand |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Betaling huur nog niet ontvangen. |
+
+### DCR-1047
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1047 |
+| customer_id | K006 |
+| vehicle_id | A006 |
+| pickup_at | 2026-09-16T10:00:00+02:00 |
+| return_at | 2026-09-19T10:00:00+02:00 |
+| location | Utrecht |
+| status | Lopend |
+| rental_days | 3 |
+| daily_rate_eur | 75 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 225 |
+| paid_eur | 225 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Gereserveerd |
+| deposit_held_eur | 750 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Auto om 10:00 uitgegeven; geen defectmelding geregistreerd. |
+
+### DCR-1048
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1048 |
+| customer_id | K007 |
+| vehicle_id | A007 |
+| pickup_at | 2026-09-20T10:00:00+02:00 |
+| return_at | 2026-09-22T10:00:00+02:00 |
+| location | Rotterdam |
+| status | Optie |
+| rental_days | 2 |
+| daily_rate_eur | 55 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 110 |
+| paid_eur | 0 |
+| refunded_eur | 0 |
+| payment_status | Niet verschuldigd |
+| deposit_eur | 500 |
+| deposit_status | Niet van toepassing |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Optie tot 17 september 17:00; rijbewijscontrole en bevestiging ontbreken. |
+
+### DCR-1049
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1049 |
+| customer_id | K008 |
+| vehicle_id | A008 |
+| pickup_at | 2026-09-11T10:00:00+02:00 |
+| return_at | 2026-09-14T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Afgerond |
+| rental_days | 3 |
+| daily_rate_eur | 109 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 327 |
+| paid_eur | 327 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 1000 |
+| deposit_status | Vrijgave aangevraagd |
+| deposit_held_eur | 1000 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Vrijgave borg aangevraagd op 15 september; bankverwerking niet bevestigd. |
+
+### DCR-1050
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1050 |
+| customer_id | K009 |
+| vehicle_id | A009 |
+| pickup_at | 2026-09-23T10:00:00+02:00 |
+| return_at | 2026-09-26T10:00:00+02:00 |
+| location | Rotterdam |
+| status | Geannuleerd |
+| rental_days | 3 |
+| daily_rate_eur | 95 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 285 |
+| paid_eur | 285 |
+| refunded_eur | 285 |
+| payment_status | Terugbetaald |
+| deposit_eur | 750 |
+| deposit_status | Niet van toepassing |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Geannuleerd 15 september; volledige huursom terugbetaald, geen annuleringskosten. |
+
+### DCR-1051
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1051 |
+| customer_id | K010 |
+| vehicle_id | A010 |
+| pickup_at | 2026-09-19T10:00:00+02:00 |
+| return_at | 2026-09-22T10:00:00+02:00 |
+| location | Utrecht |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 89 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 267 |
+| paid_eur | 267 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Gepland onderhoud tot 18 september 18:00; gereedmelding nog niet ontvangen. |
+
+### DCR-1052
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1052 |
+| customer_id | K001 |
+| vehicle_id | A001 |
+| pickup_at | 2026-09-05T10:00:00+02:00 |
+| return_at | 2026-09-07T10:00:00+02:00 |
+| location | Utrecht |
+| status | Afgerond |
+| rental_days | 2 |
+| daily_rate_eur | 49 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 98 |
+| paid_eur | 98 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Zonder bijzonderheden ingeleverd. |
+
+### DCR-1053
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1053 |
+| customer_id | K002 |
+| vehicle_id | A002 |
+| pickup_at | 2026-09-18T10:00:00+02:00 |
+| return_at | 2026-09-20T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Bevestigd |
+| rental_days | 2 |
+| daily_rate_eur | 59 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 118 |
+| paid_eur | 118 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Volgende reservering: verlenging van DCR-1043 kan hiermee botsen. |
+
+### DCR-1054
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1054 |
+| customer_id | K003 |
+| vehicle_id | A003 |
+| pickup_at | 2026-09-21T10:00:00+02:00 |
+| return_at | 2026-09-24T10:00:00+02:00 |
+| location | Rotterdam |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 55 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 165 |
+| paid_eur | 165 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Nieuwe boeking; eerdere schadebetwisting staat nog open. |
+
+### DCR-1055
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1055 |
+| customer_id | K008 |
+| vehicle_id | A008 |
+| pickup_at | 2026-09-25T10:00:00+02:00 |
+| return_at | 2026-09-28T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 109 |
+| extras_per_day_eur | 10 |
+| rental_amount_eur | 357 |
+| paid_eur | 357 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 1000 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Zakelijke rit; extra bestuurder opgenomen. |
+
+### DCR-1056
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1056 |
+| customer_id | K004 |
+| vehicle_id | A004 |
+| pickup_at | 2026-09-03T10:00:00+02:00 |
+| return_at | 2026-09-06T10:00:00+02:00 |
+| location | Utrecht |
+| status | Afgerond |
+| rental_days | 3 |
+| daily_rate_eur | 85 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 255 |
+| paid_eur | 255 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Eerdere huur zonder bijzonderheden. |
+
+
