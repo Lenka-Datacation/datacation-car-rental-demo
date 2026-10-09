@@ -1,14 +1,14 @@
 # Datacation Car Rental — Demodatabase
 
-Volledig fictieve gegevens voor de demonstratie: 10 klanten, 10 voertuigen en 15 boekingen.
+Volledig fictieve gegevens: 15 klanten, 12 voertuigen en 30 boekingen.
 
-De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppelen de records. `null` betekent niet geregistreerd of niet van toepassing; `0` betekent daadwerkelijk nul. Statussen horen bij de peildatum van deze dataset en worden niet automatisch bijgewerkt.
+De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Bestaande recordwaarden zijn behouden; `confirmed_at` is toegevoegd. `null` betekent niet geregistreerd of niet van toepassing; `0` betekent daadwerkelijk nul. Deze bron bevat geen aangeleerde voorrangsregel.
 
 ## Metadata
 
 | Veld | Waarde |
 | --- | --- |
-| versie | 1.0 |
+| versie | 2.0 |
 | bedrijf | Datacation Car Rental |
 | fictief | true |
 | peildatum | 2026-09-16T12:00:00+02:00 |
@@ -17,13 +17,18 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | taal | nl-NL |
 | bedragen | Huurprijzen zijn fictieve consumentenprijzen inclusief een aangenomen demo-btw van 21%. Borg is afzonderlijke zekerheid, geen huursom. |
 | tariefbasis | Per begonnen 24 uur; alle voorbeelden omvatten hele dagen. Geen marktprijzen of volledige verhuurvoorwaarden. |
-| scope | 10 klanten, 10 fysieke auto’s, 15 boekingen. Vestigingen in Amsterdam, Utrecht en Rotterdam zijn fictieve verhuurpunten. |
-| kentekens | DEMO-001 t/m DEMO-010 zijn opzettelijk geen geldige kentekens. |
+| scope | 15 klanten, 12 fysieke auto’s, 30 boekingen. Vestigingen in Amsterdam, Utrecht en Rotterdam zijn fictieve verhuurpunten. |
+| kentekens | DEMO-001 t/m DEMO-012 zijn opzettelijk geen geldige kentekens. |
 | contact | E-mailadressen zijn testadressen op example.com; geen telefoonnummers, BSN, documentnummers of betaalkaartgegevens. |
 | null_betekenis | null = niet van toepassing of niet geregistreerd; een bedrag 0 betekent daadwerkelijk nul. |
 | relationships | bookings.customer_id → customers.customer_id; bookings.vehicle_id → vehicles.vehicle_id |
 | bron | Volledig synthetisch opgesteld voor deze demonstratie; geen echte klant- of verhuuradministratie. |
 | identifier_contract | Canonical booking identifier: bookings[].booking_id, formatted as DCR-1234. No booking_number or boeking_id fields are used. |
+| bevestigingstijd | confirmed_at is het geregistreerde bevestigingstijdstip. null bij bestaande records betekent onbekend; niet afleiden uit booking_id of ophaaldatum. |
+| snapshot | Alle statussen beschrijven de peildatum 2026-09-16T12:00:00+02:00. Een andere demo-referentiedatum wijzigt deze statussen niet automatisch. |
+| huurhistorie | Eerdere huren worden afgeleid uit bookings met status Afgerond en return_at vóór het relevante beoordelingsmoment. Een geplande of lopende huur telt niet als afgerond. |
+| planning | Voertuigstatus beschrijft de peildatum, niet alle toekomstige perioden. Beschikbaarheid vereist controle van overlappende boekingen, opties en onderhoud voor de gevraagde periode. |
+| dubbele_boekingen | Twee bewust opgenomen onopgeloste dubbele bevestigingen door een interne planningsfout. De records bevatten feiten en geen toewijzingsbeslissing of voorrangsregel. |
 
 ## Klanten
 
@@ -183,6 +188,86 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | date_of_birth | 1990-08-11 |
 | customer_type | Particulier |
 | drivers_license_since | 2009-10-16 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K011
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K011 |
+| name | Mila Peters |
+| email | klant11@example.com |
+| city | Utrecht |
+| country | Nederland |
+| date_of_birth | 1993-03-18 |
+| customer_type | Particulier |
+| drivers_license_since | 2012-05-22 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K012
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K012 |
+| name | Ruben Bos |
+| email | klant12@example.com |
+| city | Amsterdam |
+| country | Nederland |
+| date_of_birth | 1987-10-09 |
+| customer_type | Zakelijk |
+| drivers_license_since | 2006-06-14 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K013
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K013 |
+| name | Olivia Meijer |
+| email | klant13@example.com |
+| city | Rotterdam |
+| country | Nederland |
+| date_of_birth | 1995-08-24 |
+| customer_type | Particulier |
+| drivers_license_since | 2014-09-12 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K014
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K014 |
+| name | Lucas de Wit |
+| email | klant14@example.com |
+| city | Amersfoort |
+| country | Nederland |
+| date_of_birth | 1989-05-07 |
+| customer_type | Particulier |
+| drivers_license_since | 2008-07-03 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K015
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K015 |
+| name | Eva Willems |
+| email | klant15@example.com |
+| city | Haarlem |
+| country | Nederland |
+| date_of_birth | 1997-02-13 |
+| customer_type | Particulier |
+| drivers_license_since | 2016-04-20 |
 | drivers_license_category | B |
 | identity_verification | Geverifieerd |
 | preferred_language | nl-NL |
@@ -399,6 +484,48 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | excess_eur | 1000 |
 | maintenance_until | 2026-09-18T18:00:00+02:00 |
 
+### A011
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A011 |
+| demo_license_plate | DEMO-011 |
+| make | Volkswagen |
+| model | Golf |
+| vehicle_class | Compact |
+| fuel_type | Benzine |
+| transmission | Automaat |
+| seats | 5 |
+| model_year | 2023 |
+| location | Utrecht |
+| status | Beschikbaar |
+| odometer_km | 21480 |
+| daily_rate_eur | 75 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | null |
+
+### A012
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A012 |
+| demo_license_plate | DEMO-012 |
+| make | Volkswagen |
+| model | Polo |
+| vehicle_class | Economy |
+| fuel_type | Benzine |
+| transmission | Handgeschakeld |
+| seats | 5 |
+| model_year | 2023 |
+| location | Amsterdam |
+| status | Beschikbaar |
+| odometer_km | 26710 |
+| daily_rate_eur | 59 |
+| deposit_eur | 500 |
+| excess_eur | 750 |
+| maintenance_until | null |
+
 ## Boekingen
 
 ### DCR-1042
@@ -426,6 +553,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Klant wil mogelijk verlengen; nog niet verwerkt. |
+| confirmed_at | null |
 
 ### DCR-1043
 
@@ -452,6 +580,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Extra bestuurder vastgelegd; beide rijbewijzen gecontroleerd. |
+| confirmed_at | null |
 
 ### DCR-1044
 
@@ -478,6 +607,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Klant betwist kras achterbumper; uitgifterapport ontbreekt. Schadepost nog niet gefactureerd. |
+| confirmed_at | null |
 
 ### DCR-1045
 
@@ -504,6 +634,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Ophalen vrijdag om 10:00; gezinsweekend. |
+| confirmed_at | null |
 
 ### DCR-1046
 
@@ -530,6 +661,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Betaling huur nog niet ontvangen. |
+| confirmed_at | null |
 
 ### DCR-1047
 
@@ -556,6 +688,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Auto om 10:00 uitgegeven; geen defectmelding geregistreerd. |
+| confirmed_at | null |
 
 ### DCR-1048
 
@@ -582,6 +715,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Optie tot 17 september 17:00; rijbewijscontrole en bevestiging ontbreken. |
+| confirmed_at | null |
 
 ### DCR-1049
 
@@ -608,6 +742,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Vrijgave borg aangevraagd op 15 september; bankverwerking niet bevestigd. |
+| confirmed_at | null |
 
 ### DCR-1050
 
@@ -634,6 +769,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Geannuleerd 15 september; volledige huursom terugbetaald, geen annuleringskosten. |
+| confirmed_at | null |
 
 ### DCR-1051
 
@@ -660,6 +796,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Gepland onderhoud tot 18 september 18:00; gereedmelding nog niet ontvangen. |
+| confirmed_at | null |
 
 ### DCR-1052
 
@@ -686,6 +823,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Zonder bijzonderheden ingeleverd. |
+| confirmed_at | null |
 
 ### DCR-1053
 
@@ -712,6 +850,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Volgende reservering: verlenging van DCR-1043 kan hiermee botsen. |
+| confirmed_at | null |
 
 ### DCR-1054
 
@@ -738,6 +877,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Nieuwe boeking; eerdere schadebetwisting staat nog open. |
+| confirmed_at | null |
 
 ### DCR-1055
 
@@ -764,6 +904,7 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Zakelijke rit; extra bestuurder opgenomen. |
+| confirmed_at | null |
 
 ### DCR-1056
 
@@ -790,5 +931,410 @@ De veldnamen zijn ongewijzigd: `booking_id`, `customer_id` en `vehicle_id` koppe
 | included_km_per_day | 200 |
 | extra_km_eur | 0.25 |
 | note | Eerdere huur zonder bijzonderheden. |
+| confirmed_at | null |
 
+### DCR-1057
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1057 |
+| customer_id | K001 |
+| vehicle_id | A006 |
+| pickup_at | 2026-09-22T10:00:00+02:00 |
+| return_at | 2026-09-24T10:00:00+02:00 |
+| location | Utrecht |
+| status | Bevestigd |
+| rental_days | 2 |
+| daily_rate_eur | 75 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 150 |
+| paid_eur | 150 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Interne planning heeft A006 door een Datacation-planningsfout ook toegewezen aan DCR-1058 voor dezelfde periode. Beide bevestigingen hebben hetzelfde tijdstip. Vastgesteld op 16 september om 09:00. Klanten zijn geïnformeerd over de dubbele bevestiging. Toewijzing is onopgelost; er is geen wijziging, alternatief of compensatie uitgevoerd. |
+| confirmed_at | 2026-09-15T09:00:00+02:00 |
+
+### DCR-1058
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1058 |
+| customer_id | K011 |
+| vehicle_id | A006 |
+| pickup_at | 2026-09-22T10:00:00+02:00 |
+| return_at | 2026-09-24T10:00:00+02:00 |
+| location | Utrecht |
+| status | Bevestigd |
+| rental_days | 2 |
+| daily_rate_eur | 75 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 150 |
+| paid_eur | 150 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Interne planning heeft A006 door een Datacation-planningsfout ook toegewezen aan DCR-1057 voor dezelfde periode. Beide bevestigingen hebben hetzelfde tijdstip. Vastgesteld op 16 september om 09:00. Klanten zijn geïnformeerd over de dubbele bevestiging. Toewijzing is onopgelost; er is geen wijziging, alternatief of compensatie uitgevoerd. |
+| confirmed_at | 2026-09-15T09:00:00+02:00 |
+
+### DCR-1059
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1059 |
+| customer_id | K008 |
+| vehicle_id | A002 |
+| pickup_at | 2026-09-23T10:00:00+02:00 |
+| return_at | 2026-09-25T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Bevestigd |
+| rental_days | 2 |
+| daily_rate_eur | 59 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 118 |
+| paid_eur | 118 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Interne planning heeft A002 door een Datacation-planningsfout ook toegewezen aan DCR-1060 voor dezelfde periode. Beide bevestigingen hebben hetzelfde tijdstip. Vastgesteld op 16 september om 10:00. Klanten zijn geïnformeerd over de dubbele bevestiging. Toewijzing is onopgelost; er is geen wijziging, alternatief of compensatie uitgevoerd. |
+| confirmed_at | 2026-09-15T14:00:00+02:00 |
+
+### DCR-1060
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1060 |
+| customer_id | K012 |
+| vehicle_id | A002 |
+| pickup_at | 2026-09-23T10:00:00+02:00 |
+| return_at | 2026-09-25T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Bevestigd |
+| rental_days | 2 |
+| daily_rate_eur | 59 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 118 |
+| paid_eur | 118 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Interne planning heeft A002 door een Datacation-planningsfout ook toegewezen aan DCR-1059 voor dezelfde periode. Beide bevestigingen hebben hetzelfde tijdstip. Vastgesteld op 16 september om 10:00. Klanten zijn geïnformeerd over de dubbele bevestiging. Toewijzing is onopgelost; er is geen wijziging, alternatief of compensatie uitgevoerd. |
+| confirmed_at | 2026-09-15T14:00:00+02:00 |
+
+### DCR-1061
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1061 |
+| customer_id | K001 |
+| vehicle_id | A001 |
+| pickup_at | 2026-04-10T10:00:00+02:00 |
+| return_at | 2026-04-12T10:00:00+02:00 |
+| location | Utrecht |
+| status | Afgerond |
+| rental_days | 2 |
+| daily_rate_eur | 49 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 98 |
+| paid_eur | 98 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-04-01T11:00:00+02:00 |
+
+### DCR-1062
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1062 |
+| customer_id | K001 |
+| vehicle_id | A001 |
+| pickup_at | 2026-05-08T10:00:00+02:00 |
+| return_at | 2026-05-10T10:00:00+02:00 |
+| location | Utrecht |
+| status | Afgerond |
+| rental_days | 2 |
+| daily_rate_eur | 49 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 98 |
+| paid_eur | 98 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-04-24T11:00:00+02:00 |
+
+### DCR-1063
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1063 |
+| customer_id | K001 |
+| vehicle_id | A001 |
+| pickup_at | 2026-06-12T10:00:00+02:00 |
+| return_at | 2026-06-14T10:00:00+02:00 |
+| location | Utrecht |
+| status | Afgerond |
+| rental_days | 2 |
+| daily_rate_eur | 49 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 98 |
+| paid_eur | 98 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-06-01T11:00:00+02:00 |
+
+### DCR-1064
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1064 |
+| customer_id | K001 |
+| vehicle_id | A001 |
+| pickup_at | 2026-08-07T10:00:00+02:00 |
+| return_at | 2026-08-10T10:00:00+02:00 |
+| location | Utrecht |
+| status | Afgerond |
+| rental_days | 3 |
+| daily_rate_eur | 49 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 147 |
+| paid_eur | 147 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-07-24T11:00:00+02:00 |
+
+### DCR-1065
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1065 |
+| customer_id | K008 |
+| vehicle_id | A008 |
+| pickup_at | 2026-05-04T10:00:00+02:00 |
+| return_at | 2026-05-06T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Afgerond |
+| rental_days | 2 |
+| daily_rate_eur | 109 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 218 |
+| paid_eur | 218 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 1000 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-04-20T11:00:00+02:00 |
+
+### DCR-1066
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1066 |
+| customer_id | K008 |
+| vehicle_id | A008 |
+| pickup_at | 2026-06-08T10:00:00+02:00 |
+| return_at | 2026-06-11T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Afgerond |
+| rental_days | 3 |
+| daily_rate_eur | 109 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 327 |
+| paid_eur | 327 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 1000 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-05-25T11:00:00+02:00 |
+
+### DCR-1067
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1067 |
+| customer_id | K008 |
+| vehicle_id | A008 |
+| pickup_at | 2026-08-10T10:00:00+02:00 |
+| return_at | 2026-08-13T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Afgerond |
+| rental_days | 3 |
+| daily_rate_eur | 109 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 327 |
+| paid_eur | 327 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 1000 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-07-27T11:00:00+02:00 |
+
+### DCR-1068
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1068 |
+| customer_id | K013 |
+| vehicle_id | A003 |
+| pickup_at | 2026-09-26T10:00:00+02:00 |
+| return_at | 2026-09-29T10:00:00+02:00 |
+| location | Rotterdam |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 55 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 165 |
+| paid_eur | 165 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Bevestigde huur in Rotterdam; geen extra bestuurder geregistreerd. |
+| confirmed_at | 2026-09-10T11:00:00+02:00 |
+
+### DCR-1069
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1069 |
+| customer_id | K014 |
+| vehicle_id | A004 |
+| pickup_at | 2026-09-26T10:00:00+02:00 |
+| return_at | 2026-09-28T10:00:00+02:00 |
+| location | Utrecht |
+| status | Bevestigd |
+| rental_days | 2 |
+| daily_rate_eur | 85 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 170 |
+| paid_eur | 170 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Eerste geregistreerde huur; bevestigde reservering in Utrecht. |
+| confirmed_at | 2026-09-11T11:00:00+02:00 |
+
+### DCR-1070
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1070 |
+| customer_id | K015 |
+| vehicle_id | A005 |
+| pickup_at | 2026-09-29T10:00:00+02:00 |
+| return_at | 2026-10-02T10:00:00+02:00 |
+| location | Amsterdam |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 89 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 267 |
+| paid_eur | 267 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Eerste geregistreerde huur; bevestigde reservering van elektrische auto in Amsterdam. |
+| confirmed_at | 2026-09-12T11:00:00+02:00 |
+
+### DCR-1071
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1071 |
+| customer_id | K013 |
+| vehicle_id | A007 |
+| pickup_at | 2026-07-10T10:00:00+02:00 |
+| return_at | 2026-07-12T10:00:00+02:00 |
+| location | Rotterdam |
+| status | Afgerond |
+| rental_days | 2 |
+| daily_rate_eur | 55 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 110 |
+| paid_eur | 110 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 500 |
+| deposit_status | Vrijgegeven |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
+| confirmed_at | 2026-06-26T11:00:00+02:00 |
 
