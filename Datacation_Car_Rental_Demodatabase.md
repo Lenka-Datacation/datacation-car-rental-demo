@@ -1,14 +1,14 @@
 # Datacation Car Rental — Demodatabase
 
-Volledig fictieve gegevens: 15 klanten, 12 voertuigen en 30 boekingen.
+Volledig fictieve gegevens: 16 klanten, 14 voertuigen en 31 boekingen.
 
-De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Bestaande recordwaarden zijn behouden; `confirmed_at` is toegevoegd. `null` betekent niet geregistreerd of niet van toepassing; `0` betekent daadwerkelijk nul. Deze bron bevat geen aangeleerde voorrangsregel.
+De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Alle records uit versie 2.0 zijn behouden. De twee zevenzitters en de capaciteitscasus zijn toegevoegd. `null` betekent niet geregistreerd of niet van toepassing; `0` betekent daadwerkelijk nul. Alle statussen horen bij de peildatum. Het aanbod van een alternatief is geen uitgevoerde boekingswijziging.
 
 ## Metadata
 
 | Veld | Waarde |
 | --- | --- |
-| versie | 2.0 |
+| versie | 3.0 |
 | bedrijf | Datacation Car Rental |
 | fictief | true |
 | peildatum | 2026-09-16T12:00:00+02:00 |
@@ -17,8 +17,8 @@ De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Be
 | taal | nl-NL |
 | bedragen | Huurprijzen zijn fictieve consumentenprijzen inclusief een aangenomen demo-btw van 21%. Borg is afzonderlijke zekerheid, geen huursom. |
 | tariefbasis | Per begonnen 24 uur; alle voorbeelden omvatten hele dagen. Geen marktprijzen of volledige verhuurvoorwaarden. |
-| scope | 15 klanten, 12 fysieke auto’s, 30 boekingen. Vestigingen in Amsterdam, Utrecht en Rotterdam zijn fictieve verhuurpunten. |
-| kentekens | DEMO-001 t/m DEMO-012 zijn opzettelijk geen geldige kentekens. |
+| scope | 16 klanten, 14 fysieke auto’s, 31 boekingen. Vestigingen in Amsterdam, Utrecht en Rotterdam zijn fictieve verhuurpunten. |
+| kentekens | DEMO-001 t/m DEMO-014 zijn opzettelijk geen geldige kentekens. |
 | contact | E-mailadressen zijn testadressen op example.com; geen telefoonnummers, BSN, documentnummers of betaalkaartgegevens. |
 | null_betekenis | null = niet van toepassing of niet geregistreerd; een bedrag 0 betekent daadwerkelijk nul. |
 | relationships | bookings.customer_id → customers.customer_id; bookings.vehicle_id → vehicles.vehicle_id |
@@ -29,6 +29,11 @@ De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Be
 | huurhistorie | Eerdere huren worden afgeleid uit bookings met status Afgerond en return_at vóór het relevante beoordelingsmoment. Een geplande of lopende huur telt niet als afgerond. |
 | planning | Voertuigstatus beschrijft de peildatum, niet alle toekomstige perioden. Beschikbaarheid vereist controle van overlappende boekingen, opties en onderhoud voor de gevraagde periode. |
 | dubbele_boekingen | Twee bewust opgenomen onopgeloste dubbele bevestigingen door een interne planningsfout. De records bevatten feiten en geen toewijzingsbeslissing of voorrangsregel. |
+| voertuigcapaciteit | confirmed_seats is het bevestigde aantal zitplaatsen van de boeking. offered_vehicle_id verwijst naar een aangeboden alternatief; dat is geen uitgevoerde vervanging. delivered_vehicle_id = null betekent dat geen geleverd voertuig is geregistreerd. |
+| voertuigklasse | vehicle_class_rank is de geregistreerde klassevolgorde voor de twee nieuwe zevenzitters: een hogere waarde betekent een hogere klasse. Bij oudere voertuigen ontbreekt deze extra classificatie. |
+| prijsafspraak | daily_rate_eur en rental_amount_eur op de boeking zijn de overeengekomen prijs. Een hoger standaardtarief van een alternatief verandert de boekingsprijs niet automatisch en bewijst geen goedgekeurde upgrade. |
+| capaciteitscasus | Boeking DCR-1072 staat op 16 september 2026 om 12:00 nog te wachten op een passend voertuig. Het aanbod van een vijfzitter is niet geaccepteerd. Er is geen vervangend voertuig toegewezen. |
+| extra_velden | vehicle_class_rank, confirmed_seats en passenger_count zijn getallen. offer_accepted is een boolean. Nieuwe velden veranderen de betekenis van bestaande velden niet. |
 
 ## Klanten
 
@@ -268,6 +273,22 @@ De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Be
 | date_of_birth | 1997-02-13 |
 | customer_type | Particulier |
 | drivers_license_since | 2016-04-20 |
+| drivers_license_category | B |
+| identity_verification | Geverifieerd |
+| preferred_language | nl-NL |
+
+### K016
+
+| Veld | Waarde |
+| --- | --- |
+| customer_id | K016 |
+| name | Marieke de Boer |
+| email | klant16@example.com |
+| city | Rotterdam |
+| country | Nederland |
+| date_of_birth | 1986-05-23 |
+| customer_type | Particulier |
+| drivers_license_since | 2005-08-18 |
 | drivers_license_category | B |
 | identity_verification | Geverifieerd |
 | preferred_language | nl-NL |
@@ -525,6 +546,52 @@ De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Be
 | deposit_eur | 500 |
 | excess_eur | 750 |
 | maintenance_until | null |
+
+### A013
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A013 |
+| demo_license_plate | DEMO-013 |
+| make | Volkswagen |
+| model | Touran |
+| vehicle_class | Familie MPV |
+| fuel_type | Benzine |
+| transmission | Automaat |
+| seats | 7 |
+| model_year | 2024 |
+| location | Rotterdam |
+| status | Onderhoud |
+| odometer_km | 26950 |
+| daily_rate_eur | 105 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | 2026-09-20T18:00:00+02:00 |
+| vehicle_class_rank | 1 |
+| note | Technisch defect vastgesteld op 16 september 2026 om 08:30. Niet inzetbaar voor de huurperiode van DCR-1072; reparatie en gereedmelding ontbreken. |
+
+### A014
+
+| Veld | Waarde |
+| --- | --- |
+| vehicle_id | A014 |
+| demo_license_plate | DEMO-014 |
+| make | Ford |
+| model | Galaxy |
+| vehicle_class | Comfort MPV |
+| fuel_type | Benzine |
+| transmission | Automaat |
+| seats | 7 |
+| model_year | 2024 |
+| location | Rotterdam |
+| status | Beschikbaar |
+| odometer_km | 18320 |
+| daily_rate_eur | 125 |
+| deposit_eur | 750 |
+| excess_eur | 1000 |
+| maintenance_until | null |
+| vehicle_class_rank | 2 |
+| note | Geen onderhoudsblokkering of boeking geregistreerd. Beschikbaarheid blijft een conclusie uit deze fictieve momentopname en moet voor de gevraagde periode worden gecontroleerd. |
 
 ## Boekingen
 
@@ -1337,4 +1404,40 @@ De veldnamen `booking_id`, `customer_id` en `vehicle_id` koppelen de records. Be
 | extra_km_eur | 0.25 |
 | note | Afgeronde eerdere huur; voertuig ingeleverd zonder bijzonderheden en borg vrijgegeven. |
 | confirmed_at | 2026-06-26T11:00:00+02:00 |
+
+### DCR-1072
+
+| Veld | Waarde |
+| --- | --- |
+| booking_id | DCR-1072 |
+| customer_id | K016 |
+| vehicle_id | A013 |
+| pickup_at | 2026-09-16T11:00:00+02:00 |
+| return_at | 2026-09-19T11:00:00+02:00 |
+| location | Rotterdam |
+| status | Bevestigd |
+| rental_days | 3 |
+| daily_rate_eur | 105 |
+| extras_per_day_eur | 0 |
+| rental_amount_eur | 315 |
+| paid_eur | 315 |
+| refunded_eur | 0 |
+| payment_status | Betaald |
+| deposit_eur | 750 |
+| deposit_status | Nog niet gereserveerd |
+| deposit_held_eur | 0 |
+| disputed_damage_eur | 0 |
+| included_km_per_day | 200 |
+| extra_km_eur | 0.25 |
+| note | Zevenzitter bevestigd. Bij aankomst bleek het geboekte voertuig A013 wegens een technisch defect niet inzetbaar. Datacation bood A009 (vijf zitplaatsen) aan; de klant accepteerde dit aanbod niet omdat het gezin uit zeven personen bestaat. De klant wacht nog op een passend voertuig. Geen voertuig overgedragen en geen vervanging, upgrade, prijswijziging of vergoeding uitgevoerd. |
+| confirmed_at | 2026-09-10T14:00:00+02:00 |
+| confirmed_seats | 7 |
+| passenger_count | 7 |
+| handover_status | Wacht op passend voertuig |
+| actual_pickup_at | null |
+| offered_vehicle_id | A009 |
+| offered_at | 2026-09-16T11:10:00+02:00 |
+| offer_accepted | false |
+| delivered_vehicle_id | null |
+| replacement_vehicle_id | null |
 
